@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Takundanashe Nathanel Rupondo, showcasing projects, skills, and contact information.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <title>Portfolio - Takundanashe Nathanel Rupondo</title>
+</head>
+<body>
+    <!-- HEADER SECTION -->
+    <header class="intro">
+        <div class="container">
+            <h1>Takundanashe Nathanel Rupondo</h1>
+            <p>Software Engineering Student | Web & Software Developer</p>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top">Top</button>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About Me</h2>
+            <p>I'm a passionate software engineering student at Harare Institute of Technology, eager to solve complex problems through coding. My focus is on Java, Python, C, web development, and database management.</p>
+            <h3>Skills</h3>
+            <ul class="skills-list">
+                <li><strong>Languages:</strong> C, C#, Java, Python</li>
+                <li><strong>Frameworks:</strong> React, Express</li>
+                <li><strong>Databases:</strong> MySQL, MongoDB</li>
+                <li><strong>Web:</strong> HTML, CSS, JavaScript</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2>My Projects</h2>
+            <div class="projects">
+                <!-- Project 1 -->
+                <div class="project">
+                    <img src="Pictures/sandra-seitamaa-70OrioApLEM-unsplash.jpg" alt="Autarky Dog Kennels">
+                    <div class="project-content">
+                        <h3>Autarky Dog Kennels</h3>
+                        <div class="tech-stack">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <p>An e-commerce website designed for buying and selling premium dog breeds in Zimbabwe. Built with HTML, CSS, and JavaScript, this dynamic platform provides a seamless shopping experience, featuring a user-friendly interface, real-time cart updates, and secure transactions.</p>
+                        <a href="https://autarky-dog-kennels.vercel.app/" class="project-link">View Project</a>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="project">
+                    <img src="Pictures/Battle-of-the-AI-Giants-ChatGPT-vs.-Gemini-vs.-DeepSeek-–-Whos-Leading-the-Future.jpg" alt="AI Chatbot Comparison">
+                    <div class="project-content">
+                        <h3>AI Model Comparison Chatbot</h3>
+                        <div class="tech-stack">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">OpenAI API</span>
+                            <span class="tech-tag">Gemini API</span>
+                            <span class="tech-tag">DeepSeek</span>
+                        </div>
+                        <p>Experience the power of AI with this advanced chatbot built using React. This intelligent system seamlessly integrates DeepSeek, OpenAI, and Gemini models, allowing users to compare responses, performance, and reasoning capabilities in real time. Designed for AI enthusiasts, developers, and researchers, this chatbot showcases cutting-edge natural language processing (NLP) technologies.</p>
+                        <a href="project2.html" class="project-link">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2>Contact Me</h2>
+            <form id="contact-form">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <textarea id="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+            <div class="social-links">
+                <a href="https://linkedin.com" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                <a href="mailto:nathanelrupondo@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Takundanashe Nathanel Rupondo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
