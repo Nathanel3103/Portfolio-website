@@ -292,27 +292,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const messageTextarea = document.getElementById('message');
     const charCount = document.querySelector('.char-count');
     const maxChars = 500;
+    const formSpreeUrl = contactForm.action; // Get URL from form action
 
     // Character count for message
     messageTextarea.addEventListener('input', function() {
         const currentLength = this.value.length;
         charCount.textContent = currentLength;
-
-        if (currentLength > maxChars * 0.9) {
-            charCount.classList.add('warning');
-        } else {
-            charCount.classList.remove('warning');
-        }
-
-        if (currentLength > maxChars) {
-            charCount.classList.add('error');
-        } else {
-            charCount.classList.remove('error');
-        }
+        charCount.classList.toggle('text-red-500', currentLength > maxChars);
     });
 
-    // Form validation
-    contactForm.addEventListener('submit', function(e) {
+    // Form validation and submission
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         let isValid = true;
 
@@ -322,75 +312,71 @@ document.addEventListener('DOMContentLoaded', function() {
             group.querySelector('.error-message').textContent = '';
         });
 
-        // Validate name
-        const name = document.getElementById('name');
-        if (name.value.trim() === '') {
-            showError(name, 'Name is required');
-            isValid = false;
-        }
+        // Validate fields
+        const fields = [
+            { id: 'name', validate: val => val.trim() !== '', error: 'Name is required' },
+            { id: 'email', validate: val => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), error: 'Please enter a valid email address' },
+            { id: 'subject', validate: val => val.trim() !== '', error: 'Subject is required' },
+            { id: 'message', validate: val => val.trim() !== '' && val.length <= maxChars, error: `Message must be less than ${maxChars} characters` }
+        ];
 
-        // Validate email
-        const email = document.getElementById('email');
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email.value)) {
-            showError(email, 'Please enter a valid email address');
-            isValid = false;
-        }
+        fields.forEach(({ id, validate, error }) => {
+            const field = document.getElementById(id);
+            if (!validate(field.value)) {
+                showError(field, error);
+                isValid = false;
+            }
+        });
 
-        // Validate subject
-        const subject = document.getElementById('subject');
-        if (subject.value.trim() === '') {
-            showError(subject, 'Subject is required');
-            isValid = false;
-        }
+        if (!isValid) return;
 
-        // Validate message
-        const message = document.getElementById('message');
-        if (message.value.trim() === '') {
-            showError(message, 'Message is required');
-            isValid = false;
-        } else if (message.value.length > maxChars) {
-            showError(message, `Message must be less than ${maxChars} characters`);
-            isValid = false;
-        }
-
-        if (isValid) {
-            // Simulate form submission (replace with actual form submission)
-            submitForm();
-        }
-    });
-
-    function showError(input, message) {
-        const formGroup = input.closest('.form-group');
-        formGroup.classList.add('error');
-        formGroup.querySelector('.error-message').textContent = message;
-    }
-
-    function submitForm() {
         // Show loading state
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalText = submitButton.innerHTML;
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
         submitButton.disabled = true;
 
-        // Simulate API call (replace with actual form submission)
-        setTimeout(() => {
-            // Reset form
-            contactForm.reset();
-            charCount.textContent = '0';
+        try {
+            const formData = new FormData(contactForm);
             
-            // Show success message
-            const successMessage = document.getElementById('successMessage');
-            successMessage.classList.remove('hidden');
-            
-            // Reset button
+            const response = await fetch(formSpreeUrl, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // Reset form and show success
+                contactForm.reset();
+                charCount.textContent = '0';
+                showSuccess();
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            showError(document.getElementById('message'), 'Failed to send message. Please try again.');
+        } finally {
             submitButton.innerHTML = originalText;
             submitButton.disabled = false;
+        }
+    });
 
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                successMessage.classList.add('hidden');
-            }, 5000);
-        }, 1500);
+    function showError(input, message) {
+        const formGroup = input.closest('.form-group');
+        formGroup.classList.add('error');
+        const errorElement = formGroup.querySelector('.error-message');
+        errorElement.textContent = message;
+        errorElement.classList.remove('hidden');
+        input.classList.add('border-red-500');
+    }
+
+    function showSuccess() {
+        const successMessage = document.getElementById('successMessage');
+        successMessage.classList.remove('hidden');
+        setTimeout(() => {
+            successMessage.classList.add('hidden');
+        }, 5000);
     }
 });
