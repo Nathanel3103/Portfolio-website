@@ -51,37 +51,6 @@ document.addEventListener('DOMContentLoaded', enhanceDarkModeToggle);
 
 
 // Mobile Navigation Toggle
-
-document.addEventListener('DOMContentLoaded', function() {
-    const menuButton = document.getElementById('menuButton');
-    const mobileNav = document.getElementById('mobileNav');
-    const closeNav = document.getElementById('closeNav');
-
-    // Open nav
-    menuButton?.addEventListener('click', function(event) {
-        event.stopPropagation();
-        mobileNav.classList.add('active');
-    });
-
-    // Close nav with close button
-    closeNav?.addEventListener('click', function(event) {
-        event.stopPropagation();
-        mobileNav.classList.remove('active');
-    });
-
-    // Prevent clicks inside the nav from closing it
-    mobileNav?.addEventListener('click', function(event) {
-        event.stopPropagation();
-    });
-
-    // Close nav when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!mobileNav.classList.contains('active')) return;
-        if (!mobileNav.contains(event.target) && !menuButton.contains(event.target)) {
-            mobileNav.classList.remove('active');
-        }
-    });
-});
 const toggleBtn = document.getElementById('toggleBtn');
 const mobileNav = document.getElementById('mobileNav');
 const line1 = document.getElementById('line1');
