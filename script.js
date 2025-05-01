@@ -1,147 +1,150 @@
-// Dark Mode Detection
-// Enhanced dark mode toggle with animation
-function enhanceDarkModeToggle() {
-    const darkModeToggle = document.createElement('button');
-    darkModeToggle.id = 'dark-mode-toggle';
-    darkModeToggle.innerHTML = `
-        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-    `;
+// Dark Mode Handling
+function handleDarkMode() {
+    const darkModeToggles = document.querySelectorAll('#darkModeToggle, #darkModeToggleMobile');
     
-    document.body.appendChild(darkModeToggle);
-    
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    darkModeToggle.classList.toggle('dark', isDarkMode);
-    
-    darkModeToggle.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-        darkModeToggle.classList.toggle('dark');
-        
-        // Save preference to localStorage
-        const isDark = document.documentElement.classList.contains('dark');
-        localStorage.setItem('darkMode', isDark ? 'true' : 'false');
-    });
-    
-    // Apply user preference if available
+    // Apply saved preference on load
     const savedPreference = localStorage.getItem('darkMode');
     if (savedPreference) {
-        if (savedPreference === 'true') {
-            document.documentElement.classList.add('dark');
-            darkModeToggle.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            darkModeToggle.classList.remove('dark');
-        }
+        const isDark = savedPreference === 'true';
+        document.documentElement.classList.toggle('dark', isDark);
     }
+
+    // Toggle dark mode for both buttons
+    darkModeToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        });
+    });
 }
 
-document.addEventListener('DOMContentLoaded', enhanceDarkModeToggle);
+function handleMobileNavigation() {
+    const toggleBtn = document.getElementById('toggleBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const lines = [document.getElementById('line1'), document.getElementById('line2'), document.getElementById('line3')];
+    let menuOpen = false;
 
+    
+    lines.forEach(line => {
+        line.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+    });
+    mobileNav.style.transition = 'right 0.3s ease-in-out';
 
-// Mobile Navigation Toggle
-const toggleBtn = document.getElementById('toggleBtn');
-const mobileNav = document.getElementById('mobileNav');
-const line1 = document.getElementById('line1');
-const line2 = document.getElementById('line2');
-const line3 = document.getElementById('line3');
-let menuOpen = false;
-
-toggleBtn.addEventListener('click', () => {
-    if (!menuOpen) {
-        mobileNav.style.right = '0';
-        line1.style.transform = 'rotate(45deg) translate(5px, 5px)';
-        line2.style.opacity = '0';
-        line3.style.transform = 'rotate(-45deg) translate(7px, -6px)';
-        menuOpen = true;
-    } else {
-        mobileNav.style.right = '-100%';
-        line1.style.transform = 'rotate(0)';
-        line2.style.opacity = '1';
-        line3.style.transform = 'rotate(0)';
-        menuOpen = false;
+    function toggleMenu() {
+        menuOpen = !menuOpen;
+        const state = menuOpen ? 'open' : 'closed';
+        
+        // Animate hamburger lines
+        lines[0].style.transform = state === 'open' 
+            ? 'rotate(45deg) translate(4px, 4px)' 
+            : '';
+        lines[1].style.opacity = state === 'open' ? '0' : '1';
+        lines[2].style.transform = state === 'open' 
+            ? 'rotate(-45deg) translate(4px, -4px)' 
+            : '';
+        
+        // Toggle menu position
+        mobileNav.style.right = state === 'open' ? '0' : '-100%';
+        
+        // Accessibility updates
+        toggleBtn.setAttribute('aria-expanded', menuOpen);
+        document.body.style.overflow = menuOpen ? 'hidden' : '';
     }
-});
 
-document.getElementById('toggleBtn').addEventListener('click', function() {
-    document.getElementById('mobileNav').classList.toggle('active');
-});
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
 
-// Initialize Typed.js
-document.addEventListener('DOMContentLoaded', function() {
-    var typed = new Typed('#typed', {
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (menuOpen && !mobileNav.contains(e.target) && !toggleBtn.contains(e.target)) {
+            toggleMenu();
+        }
+    });
+
+    // Handle responsive behavior
+    function handleResponsive() {
+        if (window.innerWidth >= 768 && menuOpen) {
+            toggleMenu();
+        }
+    }
+
+    // Optimized resize handler
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(handleResponsive, 250);
+    });
+
+    // Escape key handler
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menuOpen) {
+            toggleMenu();
+        }
+    });
+}
+// Typed.js Initialization
+function initializeTyped() {
+    new Typed('#typed', {
         strings: ['Software Engineering Student', 'Aspiring Intern', 'AI Enthusiast'],
         typeSpeed: 70,
         backSpeed: 55,
         loop: true
     });
+}
+
+// Initialize all functionality
+document.addEventListener('DOMContentLoaded', () => {
+    handleDarkMode();
+    handleMobileNavigation();
+    initializeTyped();
 });
 
+// // Track menu state
+let menuOpen = false;
+
 // Scroll to Top Button
-window.addEventListener("scroll", toggleScrollButton);
+const scrollButton = document.getElementById("scroll-to-top");
 
 function toggleScrollButton() {
-    const scrollButton = document.getElementById("scroll-to-top");
     if (!scrollButton) return;
-
-    if (window.scrollY > 200) {
-        scrollButton.style.opacity = "1";
-        scrollButton.style.pointerEvents = "auto";
-    } else {
-        scrollButton.style.opacity = "0";
-        scrollButton.style.pointerEvents = "none";
-    }
+    
+    scrollButton.classList.toggle('opacity-0', window.scrollY <= 200);
+    scrollButton.classList.toggle('pointer-events-none', window.scrollY <= 200);
 }
+
+window.addEventListener("scroll", toggleScrollButton);
 
 document.getElementById("scroll-to-top")?.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 // Smooth Scrolling for Navigation Links
-document.querySelectorAll("a[href^='#']").forEach(anchor => {
+document.querySelectorAll("#mobileNav a[href^='#']").forEach(anchor => {
     anchor.addEventListener("click", function(event) {
         event.preventDefault();
-        const targetId = this.getAttribute("href").substring(1);
-        const targetElement = document.getElementById(targetId);
+        const targetId = this.getAttribute("href");
+        const targetElement = document.querySelector(targetId);
+        const mobileNav = document.getElementById("mobileNav");
 
         if (targetElement) {
-            // Close mobile menu if open
-            if (menuOpen) {
-                mobileNav.style.right = '-100%';
-                line1.style.transform = 'rotate(0)';
-                line2.style.opacity = '1';
-                line3.style.transform = 'rotate(0)';
+            // Close mobile menu
+            if (mobileNav.style.right === "0px" || mobileNav.style.right === "") {
+                mobileNav.style.right = "-100%";
                 menuOpen = false;
             }
-            
-            targetElement.scrollIntoView({ behavior: "smooth" });
+
+            // Smooth scroll after menu closes
+            setTimeout(() => {
+                targetElement.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }, 300); // Match menu transition duration
         }
     });
 });
-
-// Add animation to elements when they come into view
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-            observer.unobserve(entry.target);
-        }
-    });
-}, {
-    threshold: 0.1
-});
-
 // Observe section headings and content
 document.querySelectorAll('section').forEach(section => {
     observer.observe(section);
@@ -296,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const messageTextarea = document.getElementById('message');
     const charCount = document.querySelector('.char-count');
     const maxChars = 500;
-    const formSpreeUrl = contactForm.action; // Get URL from form action
+    const formSpreeUrl = contactForm.action; 
 
     // Character count for message
     messageTextarea.addEventListener('input', function() {
