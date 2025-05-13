@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Demo – WhatsApp Server</title>
+   <meta name="description" content="Portfolio of Takundanashe Nathanel Rupondo, showcasing projects, skills, and contact information.">
+   
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="Live.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2a9d8f',
+            secondary: '#041e42',
+            background: '#f8f9fa',
+            text: '#2d3436',
+            hover: '#264653',
+            deepTealNavy: '#0d2c3f'
+          }
+        }
+      },
+      darkMode: 'class'
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0d2c3f; /* Deep Teal-Navy */
+      background-image: linear-gradient(135deg, #0d2c3f 0%, #164156 100%);
+      color: #f8f9fa;
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    .video-highlight {
+      position: relative;
+    }
+    .video-highlight::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      background: linear-gradient(135deg, #2a9d8f 0%, #041e42 100%);
+      border-radius: 12px;
+      z-index: -1;
+      opacity: 0.7;
+      filter: blur(8px);
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 font-['Roboto']">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header with back button -->
+    <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+      <button
+        onclick="history.back()"
+        class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-lg"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Portfolio
+      </button>
+      
+      <h1 class="text-2xl md:text-3xl font-bold text-white">
+        <span class="text-primary">WhatsApp</span> Server Demo
+      </h1>
+    </div>
+    
+    <!-- Video Player with responsive container -->
+    <div class="relative mb-8">
+      <div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-xl opacity-70 blur-sm"></div>
+      <div class="relative video-container bg-gray-900 dark:bg-gray-800 rounded-xl overflow-hidden border-2 border-white/10 dark:border-gray-700/50 shadow-2xl">
+        <video
+          src="Live demo.mp4"
+          controls
+          poster="video-thumbnail.jpg"
+          preload="metadata"
+          class="z-10"
+        >
+          Your browser does not support the video tag.
+        </video>
+        
+        <!-- Play button overlay for better UX -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+          <div class="w-20 h-20 bg-primary/80 rounded-full flex items-center justify-center shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Content cards in a grid layout -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- About This Demo -->
+      <div class="glass-card rounded-xl p-5 transition-transform duration-300 hover:scale-[1.02]">
+        <h2 class="text-xl font-semibold mb-3 text-primary">About This Demo</h2>
+        <p class="text-gray-100 leading-relaxed mb-4">
+          This video demonstrates the WhatsApp-based appointment booking system in action. 
+          Watch how users can interact with the chatbot to schedule appointments, check availability, 
+          and receive confirmations in real-time.
+        </p>
+        
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-primary/20 text-primary border border-primary/30 rounded-full text-sm">WhatsApp API</span>
+          <span class="px-3 py-1 bg-primary/20 text-primary border border-primary/30 rounded-full text-sm">Chatbot</span>
+          <span class="px-3 py-1 bg-primary/20 text-primary border border-primary/30 rounded-full text-sm">Booking System</span>
+        </div>
+      </div>
+      
+      <!-- Key Features -->
+      <div class="glass-card rounded-xl p-5 transition-transform duration-300 hover:scale-[1.02]">
+        <h2 class="text-xl font-semibold mb-3 text-primary">Key Features</h2>
+        <ul class="space-y-2 text-gray-100">
+          <li class="flex items-start">
+            <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+            <span>Automated appointment scheduling through WhatsApp</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+            <span>Real-time availability checking</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+            <span>Instant confirmation messages</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+            <span>User-friendly conversation flow</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Technical Details -->
+    <div class="glass-card rounded-xl p-5 mt-6 transition-transform duration-300 hover:scale-[1.02]">
+      <h2 class="text-xl font-semibold mb-3 text-primary">Technical Implementation</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-secondary/40 p-4 rounded-lg">
+          <h3 class="font-medium text-primary mb-2">Frontend</h3>
+          <p class="text-sm text-gray-200">WhatsApp interface with custom templates and interactive buttons for user engagement.</p>
+        </div>
+        <div class="bg-secondary/40 p-4 rounded-lg">
+          <h3 class="font-medium text-primary mb-2">Backend</h3>
+          <p class="text-sm text-gray-200">Node.js server with Twilio integration and database management.</p>
+        </div>
+        <div class="bg-secondary/40 p-4 rounded-lg">
+          <h3 class="font-medium text-primary mb-2">Integration</h3>
+          <p class="text-sm text-gray-200">Webhooks and API endpoints for real-time data exchange with booking systems.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="mt-8 text-center text-gray-400 text-sm">
+      <p>© Takundanashe Nathanel Rupondo. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
