@@ -84,10 +84,11 @@ function handleMobileNavigation() {
         }
     });
 }
+
 // Typed.js Initialization
 function initializeTyped() {
     new Typed('#typed', {
-        strings: ['Software Engineering Student', 'Aspiring Intern', 'AI Enthusiast'],
+        strings: ['Software Engineering Student', 'Aspiring Intern', 'Problem Solver'],
         typeSpeed: 70,
         backSpeed: 55,
         loop: true
@@ -96,9 +97,83 @@ function initializeTyped() {
 
 // Initialize all functionality
 document.addEventListener('DOMContentLoaded', () => {
+    // Initial setup
     handleDarkMode();
     handleMobileNavigation();
     initializeTyped();
+
+    // Profile image pop-in animation (Hero section)
+    gsap.from('.profile-img', {
+        duration: 1.2,
+        scale: 0.8,
+        opacity: 0,
+        ease: "back.out(1.2)"
+    });
+    
+    // Animation Setup
+    AOS.init({
+        once: true,
+        duration: 800,
+        offset: 100
+    });
+    
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Section Headers
+    gsap.utils.toArray('section h2').forEach(heading => {
+        gsap.from(heading, {
+            scrollTrigger: {
+                trigger: heading,
+                start: "top center"
+            },
+            opacity: 0,
+            y: 30,
+            duration: 1
+        });
+    });
+    
+    // Project Cards with staggered animation
+    gsap.utils.toArray('.project-card').forEach((card, index) => {
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: "top center+=100"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            delay: index * 0.15
+        });
+    });
+
+    // Animate desktop navbar on page load
+    gsap.from("nav.md\\:flex", {
+        opacity: 0,
+        y: -20,
+        duration: 1,
+        ease: "power2.out"
+    });
+
+    // Animate skill cards on scroll
+    gsap.utils.toArray('.bg-gray-100').forEach(skillCard => {
+        gsap.from(skillCard, {
+            scrollTrigger: {
+                trigger: skillCard,
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            stagger: 0.2
+        });
+    });
+    
+    initSkillBars();
+    setupProjectFilters();
+    initParallax();
+    initCounters();
 });
 
 // // Track menu state
@@ -145,7 +220,16 @@ document.querySelectorAll("#mobileNav a[href^='#']").forEach(anchor => {
         }
     });
 });
+
 // Observe section headings and content
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+        }
+    });
+}, { threshold: 0.2 });
+
 document.querySelectorAll('section').forEach(section => {
     observer.observe(section);
 });
@@ -191,6 +275,7 @@ function createProgressBar() {
     document.body.appendChild(progressBar);
     return progressBar;
 }
+
 // Animate skill bars when they come into view
 function initSkillBars() {
     const skillBars = document.querySelectorAll('.skill-bar');
@@ -207,11 +292,6 @@ function initSkillBars() {
     
     skillBars.forEach(bar => observer.observe(bar));
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    initSkillBars();
-    setupProjectFilters();
-});
 
 // Project filtering functionality
 function setupProjectFilters() {
@@ -242,7 +322,6 @@ function setupProjectFilters() {
             });
         });
     });
-
 }
 
 // Add parallax scrolling effect to hero section
@@ -259,7 +338,6 @@ function initParallax() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', initParallax);
 // Animated counters for statistics
 function initCounters() {
     const counters = document.querySelectorAll('.counter');
@@ -291,11 +369,10 @@ function initCounters() {
     counters.forEach(counter => observer.observe(counter));
 }
 
-document.addEventListener('DOMContentLoaded', initCounters);
-
-// Contact Form Handling
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
+    if (!contactForm) return;
+    
     const messageTextarea = document.getElementById('message');
     const charCount = document.querySelector('.char-count');
     const maxChars = 500;
@@ -340,7 +417,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show loading state
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalText = submitButton.innerHTML;
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+        
+        // Create and add spinner
+        const loader = document.createElement('div');
+        loader.className = 'spinner';
+        submitButton.innerHTML = '';
+        submitButton.appendChild(loader);
         submitButton.disabled = true;
 
         try {
@@ -359,6 +441,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 contactForm.reset();
                 charCount.textContent = '0';
                 showSuccess();
+
+                // Animate success message
+                gsap.fromTo('#successMessage', 
+                    {opacity: 0, y: 20}, 
+                    {opacity: 1, y: 0, duration: 0.5}
+                );
             } else {
                 throw new Error('Form submission failed');
             }

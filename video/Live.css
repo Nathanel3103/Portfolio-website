@@ -1,95 +1,22 @@
+  @import url("../style.css"); /* pulls in root variables and base styles */
 
-
-@import url("../style.css"); /* pulls in root variables and base styles */
-
-/* Page Layout */
-.body-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 1rem;
-  background-color: var(--background);
-  color: var(--text);
-  transition: background-color var(--transition-base), color var(--transition-base);
-}
-
-/* Back Button */
-.back-button {
-  align-self: flex-start;
-  margin-bottom: 1rem;
-  display: inline-flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  background-color: rgba(var(--white-rgb), 0.6);
-  color: var(--text);
-  font-weight: 500;
-  border-radius: 0.5rem;
-  box-shadow: var(--shadow-base);
-  transition: background-color var(--transition-base), transform var(--transition-base);
-}
-.back-button:hover {
-  background-color: rgba(var(--white-rgb), 0.8);
-  transform: translateY(-2px);
-}
-.dark .back-button {
-  background-color: rgba(var(--text-rgb), 0.6);
-}
-
-/* Demo Container */
-.demo-container {
-  width: 100%;
-  max-width: 48rem;
-}
-
-.demo-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 1rem;
-  color: var(--primary);
-}
-
-/* Video Player */
-.video-player {
-  width: 100%;
-  border-radius: 0.75rem;
-  box-shadow: var(--shadow-base);
-  transition: box-shadow var(--transition-base), transform var(--transition-base);
-}
-.video-player:hover {
-  box-shadow: var(--shadow-hover);
-  transform: scale(1.02);
-}
-
-/* About Section */
-.about-section {
-  margin-top: 1rem;
-  padding: 1rem;
-  background-color: var(--white);
-  border-radius: 0.75rem;
-  box-shadow: var(--shadow-base);
-  transition: background-color var(--transition-base), box-shadow var(--transition-base);
-}
-.about-section h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-.about-section p {
-  line-height: 1.5;
-}
-.dark .about-section {
-  background-color: var(--secondary);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .demo-title {
-    font-size: 1.25rem;
+  /* Enhanced Color Variables */
+  :root {
+    --primary: #00d4aa;
+    --secondary: #1a365d;
+    --accent: #ff6b6b;
+    --success: #51cf66;
+    --warning: #ffd43b;
+    --background: #0a0e27;
+    --surface: #1a1f3a;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --hover: #00b894;
+    --deep-teal-navy: #0f172a;
+    --card-bg: #1e293b;
+    --gradient-start: #667eea;
+    --gradient-end: #764ba2;
+    --primary-rgb: 0, 212, 170;
+    --gradient-start-rgb: 102, 126, 234;
+    --gradient-end-rgb: 118, 75, 162;
   }
-  .about-section {
-    padding: 0.75rem;
-  }
-}
