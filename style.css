@@ -249,3 +249,152 @@ html, body {
 #toggleBtn span {
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
+/* Add in your CSS for reusable buttons & badges */
+.btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition;
+}
+.btn-secondary {
+  @apply inline-flex items-center justify-center px-6 py-2 bg-secondary text-white rounded-lg hover:bg-primary transition;
+}
+.badge {
+  @apply bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-xs;
+}
+
+/* Modern Project Card Styles */
+.modern-project-card {
+  box-shadow: var(--shadow-base);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: var(--white);
+  transition: box-shadow 0.3s var(--transition-movement), transform 0.3s var(--transition-movement);
+  display: flex;
+  flex-direction: column;
+}
+.dark .modern-project-card {
+  background: var(--background);
+}
+@media (min-width: 768px) {
+  .modern-project-card {
+    flex-direction: row;
+    min-height: 320px;
+  }
+}
+.modern-project-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px) scale(1.01);
+}
+.modern-project-card img {
+  object-fit: cover;
+  width: 100%;
+  height: 16rem;
+  transition: transform 0.5s var(--transition-movement);
+}
+@media (min-width: 768px) {
+  .modern-project-card img {
+    height: 100%;
+    min-height: 320px;
+  }
+}
+.modern-project-card .group:hover img {
+  transform: scale(1.07) rotate(-1deg);
+}
+.tech-chip {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.25rem 0.9rem;
+  border-radius: 9999px;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+  box-shadow: 0 2px 8px rgba(42,157,143,0.08);
+  letter-spacing: 0.02em;
+  transition: background 0.3s;
+}
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 2px 8px rgba(42,157,143,0.12);
+  transition: background 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background: linear-gradient(90deg, var(--secondary), var(--primary));
+  transform: scale(1.04);
+}
+.btn-secondary {
+  background: var(--white);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.75rem 2rem;
+  transition: background 0.3s, color 0.3s, border 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.btn-secondary:hover, .btn-secondary:focus {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--secondary);
+  transform: scale(1.04);
+}
+/* Badge Styles */
+.modern-project-card .absolute span, .modern-project-card .absolute {
+  z-index: 2;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 8px rgba(42,157,143,0.10);
+}
+/* Responsive grid for modern cards */
+@media (min-width: 768px) {
+  #projects .grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 767px) {
+  .modern-project-card {
+    flex-direction: column;
+  }
+  .modern-project-card img {
+    height: 16rem;
+    min-height: unset;
+  }
+}
+/* CTA Styles */
+#projects .mt-16 .inline-block {
+  box-shadow: 0 8px 32px rgba(42,157,143,0.15);
+  font-size: 1.1rem;
+}
+#projects .btn-primary {
+  margin-top: 1rem;
+}
+
+/* System Walkthrough Accent */
+.btn-walkthrough {
+  background: linear-gradient(90deg, #f7971e, #ffd200);
+  color: #222;
+}
+.btn-walkthrough:hover, .btn-walkthrough:focus {
+  background: linear-gradient(90deg, #ffd200, #f7971e);
+  color: #111;
+}
+/* Icon hover animation for buttons */
+.btn-primary i, .btn-secondary i, .btn-walkthrough i {
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-primary:hover i, .btn-secondary:hover i, .btn-walkthrough:hover i {
+  transform: translateY(-2px) scale(1.15) rotate(-6deg);
+}
