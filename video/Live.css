@@ -1,22 +1,131 @@
-  @import url("../style.css"); /* pulls in root variables and base styles */
+@import url("../style.css"); /* pulls in root variables and base styles */
 
-  /* Enhanced Color Variables */
-  :root {
-    --primary: #00d4aa;
-    --secondary: #1a365d;
-    --accent: #ff6b6b;
-    --success: #51cf66;
-    --warning: #ffd43b;
-    --background: #0a0e27;
-    --surface: #1a1f3a;
-    --text: #e2e8f0;
-    --text-secondary: #94a3b8;
-    --hover: #00b894;
-    --deep-teal-navy: #0f172a;
-    --card-bg: #1e293b;
-    --gradient-start: #667eea;
-    --gradient-end: #764ba2;
-    --primary-rgb: 0, 212, 170;
-    --gradient-start-rgb: 102, 126, 234;
-    --gradient-end-rgb: 118, 75, 162;
+/* Only keep unique styles for Live demo page below */
+
+.walkthrough-card {
+  background: rgba(255,255,255,0.85);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(42,157,143,0.10), 0 1.5px 8px rgba(0,0,0,0.06);
+  border: 1.5px solid rgba(42,157,143,0.10);
+  padding: 2rem;
+  transition: box-shadow 0.3s, transform 0.3s;
+  backdrop-filter: blur(8px);
+}
+.walkthrough-card:hover {
+  box-shadow: 0 12px 48px rgba(42,157,143,0.18), 0 2px 12px rgba(0,0,0,0.10);
+  transform: scale(1.02);
+}
+.walkthrough-icon {
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(135deg, #2a9d8f 60%, #41b7a6 100%);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f4f8f7;
+  border: 1.5px solid #e0ece9;
+  border-radius: 1rem;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  color: #2a9d8f;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s, border 0.2s;
+}
+.tech-chip i {
+  color: #2a9d8f;
+  font-size: 1.2rem;
+}
+.feature-check {
+  width: 2rem;
+  height: 2rem;
+  background: linear-gradient(135deg, #2a9d8f 60%, #41b7a6 100%);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.1rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+.play-overlay {
+  background: rgba(0,0,0,0.2);
+  transition: opacity 0.3s;
+}
+.card-glow {
+  box-shadow: 0 0 20px rgba(42,157,143,0.10), 0 8px 32px rgba(0,0,0,0.10);
+}
+.tech-impl-card {
+  background: rgba(255,255,255,0.85);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(42,157,143,0.10), 0 1.5px 8px rgba(0,0,0,0.06);
+  border: 1.5px solid rgba(42,157,143,0.10);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  backdrop-filter: blur(8px);
+}
+.tech-impl-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.tech-impl-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+@media (max-width: 900px) {
+  .tech-impl-features {
+    grid-template-columns: 1fr;
   }
+}
+.tech-impl-feature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+.tech-impl-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, #2a9d8f 60%, #41b7a6 100%);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+.tech-impl-label {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2a9d8f;
+  margin-bottom: 0.2rem;
+}
+.tech-impl-desc {
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.5;
+}
