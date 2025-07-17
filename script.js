@@ -95,185 +95,43 @@ function initializeTyped() {
     });
 }
 
-// Initialize all functionality
-document.addEventListener('DOMContentLoaded', () => {
-    // Initial setup
-    handleDarkMode();
-    handleMobileNavigation();
-    initializeTyped();
-
-    // Profile image pop-in animation (Hero section)
-    gsap.from('.profile-img', {
-        duration: 1.2,
-        scale: 0.8,
-        opacity: 0,
-        ease: "back.out(1.2)"
+// Helper for GSAP animations
+function animateWithGSAP(selector, gsapOptions, scrollOptions) {
+    gsap.utils.toArray(selector).forEach((el, index) => {
+        let options = { ...gsapOptions };
+        if (scrollOptions) {
+            options.scrollTrigger = {
+                trigger: el,
+                ...scrollOptions
+            };
+        }
+        // Allow stagger via delay
+        if (typeof options.delay === 'function') {
+            options.delay = options.delay(index);
+        }
+        gsap.from(el, options);
     });
-    
-    // Animation Setup
-    AOS.init({
-        once: true,
-        duration: 800,
-        offset: 100
-    });
-    
-    // GSAP Animations
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Section Headers
-    gsap.utils.toArray('section h2').forEach(heading => {
-        gsap.from(heading, {
-            scrollTrigger: {
-                trigger: heading,
-                start: "top center"
-            },
-            opacity: 0,
-            y: 30,
-            duration: 1
-        });
-    });
-    
-    // Project Cards with staggered animation
-    gsap.utils.toArray('.project-card').forEach((card, index) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: "top center+=100"
-            },
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            delay: index * 0.15
-        });
-    });
-
-    // Animate desktop navbar on page load
-    gsap.from("nav.md\\:flex", {
-        opacity: 0,
-        y: -20,
-        duration: 1,
-        ease: "power2.out"
-    });
-
-    // Animate skill cards on scroll
-    gsap.utils.toArray('.bg-gray-100').forEach(skillCard => {
-        gsap.from(skillCard, {
-            scrollTrigger: {
-                trigger: skillCard,
-                start: "top 80%",
-                toggleActions: "play none none none"
-            },
-            opacity: 0,
-            y: 40,
-            duration: 0.8,
-            stagger: 0.2
-        });
-    });
-    
-    initSkillBars();
-    setupProjectFilters();
-    initParallax();
-    initCounters();
-});
-
-// // Track menu state
-let menuOpen = false;
-
-// Scroll to Top Button
-const scrollButton = document.getElementById("scroll-to-top");
-
-function toggleScrollButton() {
-    if (!scrollButton) return;
-    
-    scrollButton.classList.toggle('opacity-0', window.scrollY <= 200);
-    scrollButton.classList.toggle('pointer-events-none', window.scrollY <= 200);
 }
 
-window.addEventListener("scroll", toggleScrollButton);
-
-document.getElementById("scroll-to-top")?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-// Smooth Scrolling for Navigation Links
-document.querySelectorAll("#mobileNav a[href^='#']").forEach(anchor => {
-    anchor.addEventListener("click", function(event) {
-        event.preventDefault();
-        const targetId = this.getAttribute("href");
-        const targetElement = document.querySelector(targetId);
-        const mobileNav = document.getElementById("mobileNav");
-
-        if (targetElement) {
-            // Close mobile menu
-            if (mobileNav.style.right === "0px" || mobileNav.style.right === "") {
-                mobileNav.style.right = "-100%";
-                menuOpen = false;
-            }
-
-            // Smooth scroll after menu closes
-            setTimeout(() => {
-                targetElement.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }, 300); // Match menu transition duration
-        }
-    });
-});
-
-// Observe section headings and content
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-        }
-    });
-}, { threshold: 0.2 });
-
-document.querySelectorAll('section').forEach(section => {
-    observer.observe(section);
-});
-
-// Current Year in Footer
-document.getElementById("current-year").textContent = new Date().getFullYear();
-
-// Notification Function
-function showNotification(message) {
-    const notification = document.createElement("div");
-    notification.className = "notification";
-    notification.innerText = message;
-
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.classList.add("fade-out");
-        notification.addEventListener("transitionend", () => notification.remove());
-    }, 3000);
-}
-
-// Add a scroll progress indicator
-window.addEventListener('scroll', function() {
-    const scrollTop = window.scrollY;
-    const docHeight = document.body.offsetHeight - window.innerHeight;
-    const scrollPercent = scrollTop / docHeight * 100;
-    
-    const progressBar = document.getElementById('scroll-progress') || createProgressBar();
-    progressBar.style.width = scrollPercent + '%';
-});
-
-function createProgressBar() {
-    const progressBar = document.createElement('div');
-    progressBar.id = 'scroll-progress';
-    progressBar.style.position = 'fixed';
-    progressBar.style.top = '0';
-    progressBar.style.left = '0';
-    progressBar.style.height = '4px';
-    progressBar.style.width = '0%';
-    progressBar.style.backgroundColor = 'var(--accent-color, #4a89dc)';
-    progressBar.style.zIndex = '1000';
-    progressBar.style.transition = 'width 0.2s ease-out';
-    document.body.appendChild(progressBar);
-    return progressBar;
+// Generic notification/message function
+function showMessage({ message, type = 'notification', duration = 3000, target = null }) {
+    if (type === 'notification') {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerText = message;
+        document.body.appendChild(notification);
+        setTimeout(() => {
+            notification.classList.add('fade-out');
+            notification.addEventListener('transitionend', () => notification.remove());
+        }, duration);
+    } else if (type === 'error' && target) {
+        const formGroup = target.closest('.form-group');
+        formGroup.classList.add('error');
+        const errorElement = formGroup.querySelector('.error-message');
+        errorElement.textContent = message;
+        errorElement.classList.remove('hidden');
+        target.classList.add('border-red-500');
+    }
 }
 
 // Animate skill bars when they come into view
@@ -369,33 +227,124 @@ function initCounters() {
     counters.forEach(counter => observer.observe(counter));
 }
 
+// Merge all DOMContentLoaded logic into one
+
+// Initial setup and all event listeners
+// Also includes form logic
+
 document.addEventListener('DOMContentLoaded', function() {
+    handleDarkMode();
+    handleMobileNavigation();
+    initializeTyped();
+
+    // Profile image pop-in animation (Hero section)
+    gsap.from('.profile-img', {
+        duration: 1.2,
+        scale: 0.8,
+        opacity: 0,
+        ease: "back.out(1.2)"
+    });
+
+    // Animation Setup
+    AOS.init({
+        once: true,
+        duration: 800,
+        offset: 100
+    });
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Abstracted GSAP animations
+    animateWithGSAP('section h2', { opacity: 0, y: 30, duration: 1 }, { start: "top center" });
+    animateWithGSAP('.project-card', { opacity: 0, y: 50, duration: 1, delay: i => i * 0.15 }, { start: "top center+=100" });
+    animateWithGSAP('.bg-gray-100', { opacity: 0, y: 40, duration: 0.8, stagger: 0.2 }, { start: "top 80%", toggleActions: "play none none none" });
+
+    initSkillBars();
+    setupProjectFilters();
+    initParallax();
+    initCounters();
+
+    // Scroll to Top Button
+    const scrollButton = document.getElementById("scroll-to-top");
+    function toggleScrollButton() {
+        if (!scrollButton) return;
+        scrollButton.classList.toggle('opacity-0', window.scrollY <= 200);
+        scrollButton.classList.toggle('pointer-events-none', window.scrollY <= 200);
+    }
+    window.addEventListener("scroll", toggleScrollButton);
+    document.getElementById("scroll-to-top")?.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Smooth Scrolling for Navigation Links
+    document.querySelectorAll("#mobileNav a[href^='#']").forEach(anchor => {
+        anchor.addEventListener("click", function(event) {
+            event.preventDefault();
+            const targetId = this.getAttribute("href");
+            const targetElement = document.querySelector(targetId);
+            const mobileNav = document.getElementById("mobileNav");
+            if (targetElement) {
+                // Close mobile menu
+                if (mobileNav.style.right === "0px" || mobileNav.style.right === "") {
+                    mobileNav.style.right = "-100%";
+                    menuOpen = false;
+                }
+                // Smooth scroll after menu closes
+                setTimeout(() => {
+                    targetElement.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }, 300); // Match menu transition duration
+            }
+        });
+    });
+
+    // Observe section headings and content
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            }
+        });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+
+    // Current Year in Footer
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+
+    // Add a scroll progress indicator
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.offsetHeight - window.innerHeight;
+        const scrollPercent = scrollTop / docHeight * 100;
+        const progressBar = document.getElementById('scroll-progress') || createProgressBar();
+        progressBar.style.width = scrollPercent + '%';
+    });
+
+    // Contact Form Logic
     const contactForm = document.getElementById('contactForm');
     if (!contactForm) return;
-    
     const messageTextarea = document.getElementById('message');
     const charCount = document.querySelector('.char-count');
     const maxChars = 500;
     const formSpreeUrl = contactForm.action; 
-
     // Character count for message
     messageTextarea.addEventListener('input', function() {
         const currentLength = this.value.length;
         charCount.textContent = currentLength;
         charCount.classList.toggle('text-red-500', currentLength > maxChars);
     });
-
     // Form validation and submission
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         let isValid = true;
-
         // Reset previous errors
         document.querySelectorAll('.form-group').forEach(group => {
             group.classList.remove('error');
             group.querySelector('.error-message').textContent = '';
         });
-
         // Validate fields
         const fields = [
             { id: 'name', validate: val => val.trim() !== '', error: 'Name is required' },
@@ -403,31 +352,25 @@ document.addEventListener('DOMContentLoaded', function() {
             { id: 'subject', validate: val => val.trim() !== '', error: 'Subject is required' },
             { id: 'message', validate: val => val.trim() !== '' && val.length <= maxChars, error: `Message must be less than ${maxChars} characters` }
         ];
-
         fields.forEach(({ id, validate, error }) => {
             const field = document.getElementById(id);
             if (!validate(field.value)) {
-                showError(field, error);
+                showMessage({ message: error, type: 'error', target: field });
                 isValid = false;
             }
         });
-
         if (!isValid) return;
-
         // Show loading state
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalText = submitButton.innerHTML;
-        
         // Create and add spinner
         const loader = document.createElement('div');
         loader.className = 'spinner';
         submitButton.innerHTML = '';
         submitButton.appendChild(loader);
         submitButton.disabled = true;
-
         try {
             const formData = new FormData(contactForm);
-            
             const response = await fetch(formSpreeUrl, {
                 method: 'POST',
                 body: formData,
@@ -435,13 +378,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Accept': 'application/json'
                 }
             });
-
             if (response.ok) {
                 // Reset form and show success
                 contactForm.reset();
                 charCount.textContent = '0';
                 showSuccess();
-
                 // Animate success message
                 gsap.fromTo('#successMessage', 
                     {opacity: 0, y: 20}, 
@@ -451,22 +392,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error('Form submission failed');
             }
         } catch (error) {
-            showError(document.getElementById('message'), 'Failed to send message. Please try again.');
+            showMessage({ message: 'Failed to send message. Please try again.', type: 'error', target: document.getElementById('message') });
         } finally {
             submitButton.innerHTML = originalText;
             submitButton.disabled = false;
         }
     });
-
-    function showError(input, message) {
-        const formGroup = input.closest('.form-group');
-        formGroup.classList.add('error');
-        const errorElement = formGroup.querySelector('.error-message');
-        errorElement.textContent = message;
-        errorElement.classList.remove('hidden');
-        input.classList.add('border-red-500');
-    }
-
     function showSuccess() {
         const successMessage = document.getElementById('successMessage');
         successMessage.classList.remove('hidden');
