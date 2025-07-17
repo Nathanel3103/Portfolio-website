@@ -4,75 +4,52 @@
   <meta charset="UTF-8">
   <title>Live Demo – WhatsApp Server</title>
   <meta name="description" content="Portfolio of Takundanashe Nathanel Rupondo, showcasing projects, skills, and contact information.">
-  
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="Live.css">
-  
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#00d4aa',
-            secondary: '#1a365d',
-            accent: '#ff6b6b',
-            success: '#51cf66',
-            warning: '#ffd43b',
-            background: '#0a0e27',
-            surface: '#1a1f3a',
-            text: '#e2e8f0',
-            textSecondary: '#94a3b8',
-            hover: '#00b894',
-            deepTealNavy: '#0f172a',
-            cardBg: '#1e293b',
-            gradientStart: '#667eea',
-            gradientEnd: '#764ba2'
+            primary: '#2a9d8f',
+            secondary: '#041e42',
+            background: '#f8f9fa',
+            text: '#2d3436',
+            hover: '#264653',
+            white: '#fff',
           },
           fontFamily: {
             'inter': ['Inter', 'sans-serif'],
           },
-          backdropBlur: {
-            xs: '2px',
-          },
-          boxShadow: {
-            'glow': '0 0 20px rgba(0, 212, 170, 0.3)',
-            'glow-lg': '0 0 40px rgba(0, 212, 170, 0.4)',
-            'card': '0 8px 32px rgba(0, 0, 0, 0.3)',
-            'card-hover': '0 12px 48px rgba(0, 0, 0, 0.4)',
-          }
         }
       },
       darkMode: 'class'
     }
   </script>
 </head>
-
-<body class="min-h-screen p-6 md:p-10 font-inter bg-gradient-to-br from-background via-[#1a1f3a] to-surface text-text overflow-x-hidden">
+<body class="min-h-screen p-6 md:p-10 font-roboto bg-gradient-to-br from-background via-white to-background-dark text-text overflow-x-hidden">
   <!-- Animated background elements -->
   <div class="fixed inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl floating"></div>
-    <div class="absolute top-3/4 right-1/4 w-96 h-96 bg-gradientEnd/5 rounded-full blur-3xl floating" style="animation-delay: -3s;"></div>
-    <div class="absolute top-1/2 left-3/4 w-48 h-48 bg-gradientStart/5 rounded-full blur-3xl floating" style="animation-delay: -1.5s;"></div>
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl floating"></div>
+    <div class="absolute top-3/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl floating" style="animation-delay: -3s;"></div>
+    <div class="absolute top-1/2 left-3/4 w-48 h-48 bg-primary/10 rounded-full blur-3xl floating" style="animation-delay: -1.5s;"></div>
   </div>
-
   <div class="max-w-6xl mx-auto space-y-12 relative z-10">
     <!-- Improved Header -->
     <div class="flex flex-col sm:flex-row items-center justify-between gap-8">
       <button onclick="history.back()"
-              class="group flex items-center px-8 py-4 bg-gradient-to-r from-primary via-gradientStart to-gradientEnd text-white font-bold rounded-2xl shadow-glow hover:shadow-glow-lg transition-all duration-300 hover:scale-105">
+              class="btn-secondary group flex items-center px-8 py-4 font-bold rounded-2xl shadow-glow hover:shadow-glow-lg transition-all duration-300 hover:scale-105">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
         Back to Portfolio
       </button>
-      
       <h1 class="text-4xl md:text-6xl font-black gradient-text text-center">
         WhatsApp Server Demo
       </h1>
     </div>
-
     <!-- Enhanced Video Container -->
     <div class="relative video-highlight floating">
       <div class="relative aspect-video bg-gradient-to-br from-surface to-cardBg rounded-3xl overflow-hidden border border-primary/30">
@@ -80,9 +57,8 @@
                class="w-full h-full object-contain">
           Your browser does not support the video tag.
         </video>
-        
         <!-- Enhanced Play button overlay -->
-        <div id="playOverlay" class="play-overlay absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm transition-opacity duration-300">
+        <div id="playOverlay" class="play-overlay absolute inset-0 flex items-center justify-center transition-opacity duration-300">
           <button id="playButton" class="w-24 h-24 bg-gradient-to-r from-primary to-gradientStart rounded-full flex items-center justify-center shadow-glow hover:scale-110 transition-all duration-300 cursor-pointer hover:shadow-glow-lg focus:outline-none focus:ring-4 focus:ring-primary/50">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z"/>
@@ -91,131 +67,88 @@
         </div>
       </div>
     </div>
-
     <!-- Enhanced Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <!-- Enhanced About Card -->
-      <div class="card-glow backdrop-blur-xl bg-gradient-to-br from-surface/80 to-cardBg/80 rounded-3xl p-8 transition-all duration-500 hover:scale-[1.02] border border-primary/20 shadow-card hover:shadow-card-hover">
+      <!-- About Card -->
+      <div class="walkthrough-card">
         <div class="flex items-center mb-6">
-          <div class="w-12 h-12 bg-gradient-to-r from-primary to-gradientStart rounded-xl flex items-center justify-center mr-4">
-            <i class="fas fa-info-circle text-white text-xl"></i>
+          <div class="walkthrough-icon">
+            <i class="fas fa-info-circle"></i>
           </div>
-          <h2 class="text-3xl font-black gradient-text">
-            About This Demo
-          </h2>
+          <h2 class="text-3xl font-black text-gray-800">About This Demo</h2>
         </div>
-        <p class="mb-8 leading-relaxed text-textSecondary text-lg">
+        <p class="mb-8 leading-relaxed text-gray-600 text-lg">
           This video demonstrates the WhatsApp-based appointment booking system in action. 
           Watch real-time scheduling, availability checks, and confirmations with seamless user experience.
         </p>
-        
-        <div class="flex flex-wrap gap-3">
-          <span class="px-5 py-3 bg-gradient-to-r from-primary/20 to-gradientStart/20 text-primary rounded-2xl text-base font-semibold border border-primary/30 hover:border-primary/50 transition-colors">
-            <i class="fab fa-node-js mr-2"></i>Twilio API
-          </span>
-          <span class="px-5 py-3 bg-gradient-to-r from-success/20 to-primary/20 text-success rounded-2xl text-base font-semibold border border-success/30 hover:border-success/50 transition-colors">
-            <i class="fab fa-js-square mr-2"></i>Node.js
-          </span>
-          <span class="px-5 py-3 bg-gradient-to-r from-warning/20 to-accent/20 text-warning rounded-2xl text-base font-semibold border border-warning/30 hover:border-warning/50 transition-colors">
-            <i class="fas fa-database mr-2"></i>MongoDB
-          </span>
+        <div class="flex flex-wrap gap-2">
+          <span class="tech-chip"><i class="fab fa-node-js"></i>Twilio API</span>
+          <span class="tech-chip"><i class="fab fa-js-square"></i>Node.js</span>
+          <span class="tech-chip"><i class="fas fa-database"></i>MongoDB</span>
         </div>
       </div>
-
-      <!-- Enhanced Features Card -->
-      <div class="card-glow backdrop-blur-xl bg-gradient-to-br from-surface/80 to-cardBg/80 rounded-3xl p-8 transition-all duration-500 hover:scale-[1.02] border border-primary/20 shadow-card hover:shadow-card-hover">
+      <!-- Features Card -->
+      <div class="walkthrough-card">
         <div class="flex items-center mb-6">
-          <div class="w-12 h-12 bg-gradient-to-r from-gradientStart to-gradientEnd rounded-xl flex items-center justify-center mr-4">
-            <i class="fas fa-star text-white text-xl"></i>
+          <div class="walkthrough-icon">
+            <i class="fas fa-star"></i>
           </div>
-          <h2 class="text-3xl font-black gradient-text">
-            Key Features
-          </h2>
+          <h2 class="text-3xl font-black text-gray-800">Key Features</h2>
         </div>
         <ul class="space-y-6">
-          <li class="flex items-start gap-4 group">
-            <div class="w-8 h-8 bg-gradient-to-r from-success to-primary rounded-full flex items-center justify-center mt-1 group-hover:scale-110 transition-transform">
-              <i class="fas fa-check text-white text-sm"></i>
-            </div>
-            <span class="text-text text-lg font-medium group-hover:text-primary transition-colors">Automated WhatsApp scheduling</span>
+          <li class="flex items-center">
+            <span class="feature-check"><i class="fas fa-check"></i></span>
+            <span class="text-gray-700 text-lg font-medium">Automated WhatsApp scheduling</span>
           </li>
-          <li class="flex items-start gap-4 group">
-            <div class="w-8 h-8 bg-gradient-to-r from-primary to-gradientStart rounded-full flex items-center justify-center mt-1 group-hover:scale-110 transition-transform">
-              <i class="fas fa-check text-white text-sm"></i>
-            </div>
-            <span class="text-text text-lg font-medium group-hover:text-primary transition-colors">Real-time availability updates</span>
+          <li class="flex items-center">
+            <span class="feature-check"><i class="fas fa-check"></i></span>
+            <span class="text-gray-700 text-lg font-medium">Real-time availability updates</span>
           </li>
-          <li class="flex items-start gap-4 group">
-            <div class="w-8 h-8 bg-gradient-to-r from-gradientStart to-gradientEnd rounded-full flex items-center justify-center mt-1 group-hover:scale-110 transition-transform">
-              <i class="fas fa-check text-white text-sm"></i>
-            </div>
-            <span class="text-text text-lg font-medium group-hover:text-primary transition-colors">Instant confirmation system</span>
+          <li class="flex items-center">
+            <span class="feature-check"><i class="fas fa-check"></i></span>
+            <span class="text-gray-700 text-lg font-medium">Instant confirmation system</span>
           </li>
         </ul>
       </div>
     </div>
-
-    <!-- Enhanced Technical Details -->
-    <div class="card-glow backdrop-blur-xl bg-gradient-to-br from-surface/80 to-cardBg/80 rounded-3xl p-8 transition-all duration-500 hover:scale-[1.01] border border-primary/20 shadow-card hover:shadow-card-hover">
-      <div class="flex items-center mb-8">
-        <div class="w-12 h-12 bg-gradient-to-r from-accent to-warning rounded-xl flex items-center justify-center mr-4">
-          <i class="fas fa-cogs text-white text-xl"></i>
+    <!-- Technical Implementation -->
+    <div class="tech-impl-card">
+      <div class="tech-impl-title">Technical Implementation</div>
+      <div class="tech-impl-features">
+        <div class="tech-impl-feature">
+          <div class="tech-impl-icon"><i class="fas fa-desktop"></i></div>
+          <div class="tech-impl-label">Frontend</div>
+          <div class="tech-impl-desc">Interactive WhatsApp templates with quick-reply buttons and rich media support</div>
         </div>
-        <h2 class="text-3xl font-black gradient-text">
-          Technical Implementation
-        </h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="tech-card p-6 rounded-2xl group">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-gradient-to-r from-primary to-gradientStart rounded-lg flex items-center justify-center mr-3">
-              <i class="fas fa-desktop text-white"></i>
-            </div>
-            <h3 class="font-bold text-primary text-xl group-hover:text-gradientStart transition-colors">Frontend</h3>
-          </div>
-          <p class="text-textSecondary group-hover:text-text transition-colors">Interactive WhatsApp templates with quick-reply buttons and rich media support</p>
+        <div class="tech-impl-feature">
+          <div class="tech-impl-icon"><i class="fas fa-server"></i></div>
+          <div class="tech-impl-label">Backend</div>
+          <div class="tech-impl-desc">Event-driven Node.js architecture with Redis caching and advanced security features</div>
         </div>
-        <div class="tech-card p-6 rounded-2xl group">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-gradient-to-r from-gradientStart to-gradientEnd rounded-lg flex items-center justify-center mr-3">
-              <i class="fas fa-server text-white"></i>
-            </div>
-            <h3 class="font-bold text-primary text-xl group-hover:text-gradientStart transition-colors">Backend</h3>
-          </div>
-          <p class="text-textSecondary group-hover:text-text transition-colors">Event-driven Node.js architecture with Redis caching and advanced security features</p>
-        </div>
-        <div class="tech-card p-6 rounded-2xl group">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-gradient-to-r from-warning to-accent rounded-lg flex items-center justify-center mr-3">
-              <i class="fas fa-database text-white"></i>
-            </div>
-            <h3 class="font-bold text-primary text-xl group-hover:text-gradientStart transition-colors">Database</h3>
-          </div>
-          <p class="text-textSecondary group-hover:text-text transition-colors">MongoDB Atlas cluster with sharded collections and automated backups</p>
+        <div class="tech-impl-feature">
+          <div class="tech-impl-icon"><i class="fas fa-database"></i></div>
+          <div class="tech-impl-label">Database</div>
+          <div class="tech-impl-desc">MongoDB Atlas cluster with sharded collections and automated backups</div>
         </div>
       </div>
     </div>
-
     <!-- Footer -->
     <div class="mt-8 text-center text-gray-400 text-sm">
       <p>© Takundanashe Nathanel Rupondo. All rights reserved.</p>
     </div>
   </div>
-
   <script>
     // Enhanced video play/pause overlay control
     document.addEventListener('DOMContentLoaded', function() {
       const video = document.getElementById('demoVideo');
       const playOverlay = document.getElementById('playOverlay');
       const playButton = document.getElementById('playButton');
-      
       // Function to show overlay
       function showOverlay() {
         playOverlay.style.opacity = '1';
         playOverlay.style.pointerEvents = 'auto';
         playOverlay.classList.remove('hidden');
       }
-      
       // Function to hide overlay
       function hideOverlay() {
         playOverlay.style.opacity = '0';
@@ -224,7 +157,6 @@
           playOverlay.classList.add('hidden');
         }, 300);
       }
-      
       // Play button click handler
       playButton.addEventListener('click', function(e) {
         e.preventDefault();
@@ -233,7 +165,6 @@
           console.error('Error playing video:', error);
         });
       });
-      
       // Overlay click handler (alternative way to play)
       playOverlay.addEventListener('click', function(e) {
         if (e.target === playOverlay) {
@@ -242,20 +173,16 @@
           });
         }
       });
-      
       // Video event listeners
       video.addEventListener('play', function() {
         hideOverlay();
       });
-      
       video.addEventListener('pause', function() {
         showOverlay();
       });
-      
       video.addEventListener('ended', function() {
         showOverlay();
       });
-      
       video.addEventListener('loadstart', function() {
         if (!video.paused) {
           hideOverlay();
