@@ -38,37 +38,37 @@
   </div>
   <div class="max-w-6xl mx-auto space-y-12 relative z-10">
     <!-- Improved Header -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-8">
-      <button onclick="history.back()"
-              class="btn-secondary group flex items-center px-8 py-4 font-bold rounded-2xl shadow-glow hover:shadow-glow-lg transition-all duration-300 hover:scale-105">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-        Back to Portfolio
-      </button>
-      <h1 class="text-4xl md:text-6xl font-black gradient-text text-center">
-        WhatsApp Server Demo
-      </h1>
-    </div>
+    <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <button onclick="history.back()" aria-label="Back to portfolio" class="btn-secondary group flex items-center px-6 py-3 font-semibold rounded-2xl transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </button>
+        <h1 class="sr-only">WhatsApp Server Demo</h1>
+      </div>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-center gradient-text">WhatsApp Server Demo</h2>
+    </header>
+    
     <!-- Enhanced Video Container -->
-    <div class="relative video-highlight floating">
-      <div class="relative aspect-video bg-gradient-to-br from-surface to-cardBg rounded-3xl overflow-hidden border border-primary/30">
-        <video id="demoVideo" src="Live demo.mp4" controls poster="video-thumbnail.jpg" preload="metadata"
-               class="w-full h-full object-contain">
+    <div class="relative video-highlight floating max-w-4xl mx-auto">
+      <div class="video-wrap aspect-video">
+        <video id="demoVideo" src="Live demo.mp4" controls playsinline preload="metadata" poster="video-thumbnail.jpg" class="w-full h-full object-cover" aria-label="WhatsApp server demo video">
           Your browser does not support the video tag.
         </video>
-        <!-- Enhanced Play button overlay -->
-        <div id="playOverlay" class="play-overlay absolute inset-0 flex items-center justify-center transition-opacity duration-300">
-          <button id="playButton" class="w-24 h-24 bg-gradient-to-r from-primary to-gradientStart rounded-full flex items-center justify-center shadow-glow hover:scale-110 transition-all duration-300 cursor-pointer hover:shadow-glow-lg focus:outline-none focus:ring-4 focus:ring-primary/50">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
+
+        <!-- Play overlay (hidden when playing) -->
+        <div id="playOverlay" class="play-overlay" aria-hidden="false">
+          <button id="playButton" class="play-btn" aria-label="Play demo video">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
           </button>
         </div>
       </div>
     </div>
-    <!-- Enhanced Content Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+  <!-- Enhanced Content Grid -->
+  <main class="grid grid-cols-1 lg:grid-cols-2 gap-8" role="main">
       <!-- About Card -->
       <div class="walkthrough-card">
         <div class="flex items-center mb-6">
@@ -112,82 +112,61 @@
       </div>
     </div>
     <!-- Technical Implementation -->
-    <div class="tech-impl-card">
-      <div class="tech-impl-title">Technical Implementation</div>
+    <section class="tech-impl-card" aria-labelledby="tech-title">
+      <h3 id="tech-title" class="tech-impl-title">Technical Implementation</h3>
       <div class="tech-impl-features">
         <div class="tech-impl-feature">
-          <div class="tech-impl-icon"><i class="fas fa-desktop"></i></div>
+          <div class="tech-impl-icon" aria-hidden="true"><i class="fas fa-desktop"></i></div>
           <div class="tech-impl-label">Frontend</div>
-          <div class="tech-impl-desc">Interactive WhatsApp templates with quick-reply buttons and rich media support</div>
+          <div class="tech-impl-desc">Interactive WhatsApp templates with quick-reply buttons and rich media support.</div>
         </div>
         <div class="tech-impl-feature">
-          <div class="tech-impl-icon"><i class="fas fa-server"></i></div>
+          <div class="tech-impl-icon" aria-hidden="true"><i class="fas fa-server"></i></div>
           <div class="tech-impl-label">Backend</div>
-          <div class="tech-impl-desc">Event-driven Node.js architecture with Redis caching and advanced security features</div>
+          <div class="tech-impl-desc">Event-driven Node.js architecture with Redis caching and security best practices.</div>
         </div>
         <div class="tech-impl-feature">
-          <div class="tech-impl-icon"><i class="fas fa-database"></i></div>
+          <div class="tech-impl-icon" aria-hidden="true"><i class="fas fa-database"></i></div>
           <div class="tech-impl-label">Database</div>
-          <div class="tech-impl-desc">MongoDB Atlas cluster with sharded collections and automated backups</div>
+          <div class="tech-impl-desc">MongoDB Atlas cluster with replication, backups and monitoring.</div>
         </div>
       </div>
-    </div>
+    </section>
     <!-- Footer -->
     <div class="mt-8 text-center text-gray-400 text-sm">
       <p>© Takundanashe Nathanel Rupondo. All rights reserved.</p>
     </div>
   </div>
   <script>
-    // Enhanced video play/pause overlay control
+    // Enhanced video play/pause overlay control (accessibility-friendly)
     document.addEventListener('DOMContentLoaded', function() {
       const video = document.getElementById('demoVideo');
       const playOverlay = document.getElementById('playOverlay');
       const playButton = document.getElementById('playButton');
-      // Function to show overlay
+
       function showOverlay() {
-        playOverlay.style.opacity = '1';
-        playOverlay.style.pointerEvents = 'auto';
         playOverlay.classList.remove('hidden');
+        playOverlay.setAttribute('aria-hidden', 'false');
       }
-      // Function to hide overlay
       function hideOverlay() {
-        playOverlay.style.opacity = '0';
-        playOverlay.style.pointerEvents = 'none';
-        setTimeout(() => {
-          playOverlay.classList.add('hidden');
-        }, 300);
+        playOverlay.classList.add('hidden');
+        playOverlay.setAttribute('aria-hidden', 'true');
       }
-      // Play button click handler
+
+      // Click or keyboard play
       playButton.addEventListener('click', function(e) {
         e.preventDefault();
-        e.stopPropagation();
-        video.play().catch(error => {
-          console.error('Error playing video:', error);
-        });
+        video.play().catch(()=>{});
       });
-      // Overlay click handler (alternative way to play)
-      playOverlay.addEventListener('click', function(e) {
-        if (e.target === playOverlay) {
-          video.play().catch(error => {
-            console.error('Error playing video:', error);
-          });
-        }
-      });
-      // Video event listeners
-      video.addEventListener('play', function() {
-        hideOverlay();
-      });
-      video.addEventListener('pause', function() {
-        showOverlay();
-      });
-      video.addEventListener('ended', function() {
-        showOverlay();
-      });
-      video.addEventListener('loadstart', function() {
-        if (!video.paused) {
-          hideOverlay();
-        }
-      });
+      playButton.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); video.play().catch(()=>{}); } });
+
+      // Update overlay based on video state
+      video.addEventListener('play', hideOverlay);
+      video.addEventListener('pause', showOverlay);
+      video.addEventListener('ended', showOverlay);
+
+      // Initialize state
+      if (video.paused) showOverlay(); else hideOverlay();
     });
   </script>
 </body>
